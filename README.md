@@ -6,4 +6,5 @@ main.py generates a .csv file with required data in the format (Name,Organizatio
 
 To run the program do the following:
 python3 -m pip install -r requirements.txt
+
 python3 main.py
