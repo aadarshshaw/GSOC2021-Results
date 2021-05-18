@@ -1,21 +1,21 @@
-import requests
+from bs4 import BeautifulSoup
 import csv
 
-f = csv.writer(open("gsoc2021.csv","w"))
-f.writerow(["Name","Organization","Project"])
-page_no=1
+f = csv.writer(open("gsoc2021.csv",'w'))
+f.writerow(['Name','Organization','Project'])
 
-while True:
-    s= f"https://summerofcode.withgoogle.com/api/program/current/project/?page={page_no}&page_size=20"
-    res = requests.get(s)
-    j=res.json()
-    page_no+=1
-    if len(j["results"]) ==0:
-        break
-    for idx in range(len(j["results"])):
-        current = j['results'][idx]
-        project = current['title']
-        name = current['student']['display_name']
-        organization = current['organization']['name']
-        f.writerow([name,organization,project])
-    
+soup = BeautifulSoup(open("page.html"), features="lxml")
+
+res = soup.findAll(class_='project-card__right-header-content')
+names =[]
+organizations = []
+projects = []
+for i in res:
+    names.append(i.find('h2'))
+    a = i.findAll('a')
+    projects.append(a[0])
+    organizations.append(a[1])
+for i in range(len(names)):
+    f.writerow([names[i].text,organizations[i].text,projects[i].text])
+
+
