@@ -1,10 +1,10 @@
 from bs4 import BeautifulSoup
 import csv
 
-f = csv.writer(open("gsoc2021.csv",'w'))
+f = csv.writer(open("gsoc2021.csv",'w',encoding='utf-8'))
 f.writerow(['Name','Organization','Project'])
 
-soup = BeautifulSoup(open("page.html"), features="lxml")
+soup = BeautifulSoup(open("page.html",encoding='utf-8'), features="lxml")
 
 res = soup.findAll(class_='project-card__right-header-content')
 names =[]
